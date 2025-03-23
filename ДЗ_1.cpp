@@ -24,8 +24,6 @@ class BinaryTree
         }
     };
 
-class BinaryTree
-{
     Node* _root;
     int _count_elems;
     //Приватные Методы
@@ -93,14 +91,20 @@ class BinaryTree
         if (root->_value <= key)
         {
             if (!root->_right_branch)
+            {
                 root->_right_branch = new Node(key);
+                this->_count_elems += 1;
+            }
             else
                 insert(root->_right_branch, key);
         }
         else if (root->_value > key)
         {
             if (!root->_left_branch)
+            {
                 root->_left_branch = new Node(key);
+                this->_count_elems += 1;
+            }
             else
                 insert(root->_left_branch, key);
         }
@@ -165,6 +169,7 @@ class BinaryTree
             if (root->_left_branch == nullptr && root->_right_branch == nullptr)
             {
                 result = root->_value;
+                this->_count_elems -= 1;
                 delete root;
                 root = nullptr;
                 return result;
@@ -177,6 +182,7 @@ class BinaryTree
             if (root->_left_branch == nullptr && root->_right_branch == nullptr)
             {
                 result = root->_value;
+                this->_count_elems -= 1;
                 delete root;
                 root = nullptr;
                 return result;
@@ -212,6 +218,7 @@ class BinaryTree
             if (root->_left_branch == nullptr && root->_right_branch == nullptr)
             {
                 result = root->_value;
+                this->_count_elems -= 1;
                 delete root;
                 root = nullptr;
                 return result;
@@ -307,11 +314,13 @@ public:
     }
     bool contains(int key)
     {
-        vector<Node*> tmp_sort_array = get_sa(*this);
+        vector<int> tmp_sort_array = get_sortarray(*this);
         for (int i = 0; i < _count_elems; i++)
         {
-            if (tmp_sort_array[i]->_value == key)
-        return 1;
+            if (tmp_sort_array[i] == key)
+                return 1;
+        }
+        return 0;
     }
     bool contains(int key) const
     {
@@ -430,8 +439,8 @@ int main()
     tree_2.erase(12);
     tree_2.erase(16);
     tree_2.insert(250);
-    //cout << tree_2.erase(20) << endl;
-    //cout << tree_2.erase(250) << endl;
+    cout << "tree_2.erase(20): " << tree_2.erase(20) << endl;
+    cout << "tree_2.erase(250): " << tree_2.erase(250) << endl;
     tree_2.insert(11);
     cout << "end tree: ";
     tree.print();
